@@ -8,12 +8,16 @@ import com.xuecheng.framework.domain.cms.response.CmsCode;
 import com.xuecheng.framework.domain.cms.response.CmsPageResult;
 import com.xuecheng.framework.model.response.QueryResponseResult;
 import com.xuecheng.framework.model.response.QueryResult;
+import com.xuecheng.framework.web.BaseController;
 import com.xuecheng.service.CmsService;
+import freemarker.template.TemplateException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.GeneratedValue;
+import javax.servlet.ServletOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,7 +28,7 @@ import java.util.List;
  */
 @Controller
 @RequestMapping("/cms")
-public class CmsController implements CmsPageControllerApi {
+public class CmsController extends BaseController implements CmsPageControllerApi  {
 
     @Autowired
     private CmsService cmsService;
@@ -63,6 +67,20 @@ public class CmsController implements CmsPageControllerApi {
     public CmsPageResult updateById(String id,@RequestBody CmsPage cmsPage) {
 
         return cmsService.updateById(id,cmsPage);
+    }
+
+    @GetMapping("/getPagehtmlByid")
+    @Override
+    @ResponseBody
+    public void getPagehtmlByid(String id) throws Exception {
+
+        String pagehtmlByid = cmsService.getPagehtmlByid(id);
+
+        ServletOutputStream outputStream = response.getOutputStream();
+
+        outputStream.write(pagehtmlByid.getBytes("UTF-8"));
+
+
     }
 
     @GetMapping("/findbyname")

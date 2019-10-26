@@ -30,6 +30,6 @@ public class TestTwo {
 
         map.putAll(body);
 
-        return "index_banner";
+        return "asdada";
     }
 }

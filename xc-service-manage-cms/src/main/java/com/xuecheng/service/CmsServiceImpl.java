@@ -1,18 +1,38 @@
 package com.xuecheng.service;
 
+import com.mongodb.client.gridfs.GridFSBucket;
+import com.mongodb.client.gridfs.GridFSDownloadStream;
+import com.mongodb.client.gridfs.model.GridFSFile;
 import com.xuecheng.dao.CmsPageReportry;
+import com.xuecheng.dao.CmsTemplateReportry;
 import com.xuecheng.framework.domain.cms.CmsPage;
+import com.xuecheng.framework.domain.cms.CmsTemplate;
 import com.xuecheng.framework.domain.cms.request.QueryPageRequest;
 import com.xuecheng.framework.domain.cms.response.CmsPageResult;
 import com.xuecheng.framework.model.response.CommonCode;
 import com.xuecheng.framework.model.response.QueryResponseResult;
 import com.xuecheng.framework.model.response.QueryResult;
+import freemarker.cache.StringTemplateLoader;
+import freemarker.template.Configuration;
+import freemarker.template.Template;
+import freemarker.template.TemplateException;
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.gridfs.GridFsResource;
+import org.springframework.data.mongodb.gridfs.GridFsTemplate;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
+import org.springframework.web.client.RestTemplate;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 /**
@@ -25,6 +45,18 @@ public class CmsServiceImpl implements CmsService {
 
     @Autowired
     private CmsPageReportry cmsPageReportry;
+
+    @Autowired
+    private CmsTemplateReportry cmsTemplateReportry;
+
+    @Autowired
+    private RestTemplate restTemplate;
+
+    @Autowired
+    GridFsTemplate gridFsTemplate;
+
+    @Autowired
+    GridFSBucket gridFSBucket;
 
     @Override
     public List<CmsPage> findAll() {
@@ -131,5 +163,59 @@ public class CmsServiceImpl implements CmsService {
         }
 
         return new CmsPageResult(CommonCode.FAIL,null);
+    }
+
+    @Override
+    public String getPagehtmlByid(String pageId) {
+
+        try {
+        Optional<CmsPage> optional = cmsPageReportry.findById(pageId);
+
+        CmsPage cmsPage = optional.get();
+
+        String dataUrl = cmsPage.getDataUrl();
+
+        ResponseEntity<Map> forEntity = restTemplate.getForEntity("http://localhost:31001/cms/getmodel?id=5a791725dd573c3574ee333f", Map.class);
+
+        Map body = forEntity.getBody();
+
+        String templateId = cmsPage.getTemplateId();
+
+        Optional<CmsTemplate> byId = cmsTemplateReportry.findById(templateId);
+
+        CmsTemplate cmsTemplate = byId.get();
+
+        String templateFileId = cmsTemplate.getTemplateFileId();
+
+        GridFSFile id = gridFsTemplate.findOne(Query.query(Criteria.where("_id").is("5db1698599484265ba9dbf51")));
+
+        GridFSDownloadStream gridFSDownloadStream = gridFSBucket.openDownloadStream(id.getObjectId());
+
+        GridFsResource gridFsResource = new GridFsResource(id, gridFSDownloadStream);
+
+        InputStream  inputStream = gridFsResource.getInputStream();
+
+        String tempalteString = IOUtils.toString(inputStream);
+
+        Configuration configuration = new Configuration(Configuration.getVersion());
+
+        StringTemplateLoader stringTemplateLoader = new StringTemplateLoader();
+
+        stringTemplateLoader.putTemplate("template",tempalteString);
+
+        configuration.setTemplateLoader(stringTemplateLoader);
+
+        Template template = configuration.getTemplate("template", "UTF-8");
+
+        String s = FreeMarkerTemplateUtils.processTemplateIntoString(template, body);
+
+        System.out.println(s);
+
+        return s;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

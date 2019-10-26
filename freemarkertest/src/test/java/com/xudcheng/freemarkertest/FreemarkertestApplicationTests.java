@@ -75,6 +75,19 @@ class FreemarkertestApplicationTests {
     }
 
     @Test
+    void savedatasada() throws Exception {
+
+        File file=new File("d:/index_banner.html");
+        //定义输入流         
+        FileInputStream inputStram=new FileInputStream(file);
+        //向GridFS存储文件
+        ObjectId objectId=gridFsTemplate.store(inputStram,"lunboceshisssssss","");
+        //得到文件ID
+        String fileId=objectId.toString();
+        System.out.println(fileId);
+    }
+
+    @Test
     void testget() throws Exception {
 
         String fileId="5db005c28a4c7e5fc2ab7ffa";

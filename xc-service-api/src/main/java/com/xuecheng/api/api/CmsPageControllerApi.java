@@ -9,6 +9,8 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 
+import java.io.IOException;
+
 /**
  * @author HuAn
  * @email huan4587@163.com
@@ -37,6 +39,9 @@ public interface CmsPageControllerApi {
 
     @ApiOperation("修改对象")
     public CmsPageResult updateById(String id,CmsPage cmsPage);
+
+    @ApiOperation("获取静态页面")
+    public void getPagehtmlByid(String id) throws Exception;
 
 
 }
