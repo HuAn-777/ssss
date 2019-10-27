@@ -1,4 +1,4 @@
-package com.xuecheng;
+package com.xuecheng.xcservicecmsconsumer;
 
 import com.mongodb.MongoClient;
 import com.mongodb.client.MongoDatabase;
@@ -16,13 +16,13 @@ import org.springframework.web.client.RestTemplate;
 @SpringBootApplication
 @EntityScan(value = "com.xuecheng.framework.domain.cms")
 @ComponentScan(basePackages = {"com.xuecheng.api","com.xuecheng"})
-public class XcServiceCmsClientApplication {
+public class XcServiceCmsConsumerApplication {
 
     @Value("${spring.data.mongodb.database}")
     private String db;
 
     public static void main(String[] args) {
-        SpringApplication.run(XcServiceCmsClientApplication.class, args);
+        SpringApplication.run(XcServiceCmsConsumerApplication.class, args);
     }
 
     @Bean
