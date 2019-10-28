@@ -1,11 +1,12 @@
 package com.xuecheng.xcservicecmsconsumer.MQconfig;
 
-import org.springframework.amqp.core.Exchange;
-import org.springframework.amqp.core.ExchangeBuilder;
-import org.springframework.amqp.core.Queue;
+import org.springframework.amqp.core.*;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.stereotype.Component;
 
 /**
  * @author HuAn
@@ -13,6 +14,7 @@ import org.springframework.context.annotation.Configuration;
  * @date 2019/10/27
  */
 @Configuration
+@PropertySource("classpath:application.properties")
 public class MQconfigger {
 
     //队列bean的名称     
@@ -23,11 +25,11 @@ public class MQconfigger {
     @Value("${xuecheng.mq.queue}")
     public String queue_cms_postpage_name;
     //routingKey 即站点Id     
-    @Value("${xuecheng.mq.routingKey}")
+    @Value("${xuecheng.mq.routinkey}")
     public String routingKey;
 
     /**
-     *      * 交换机配置使用direct类型      * @return the exchange      
+     *      xuecheng.mq.routinkey* 交换机配置使用direct类型      * @return the exchange      
      */
 
     @Bean(EX_ROUTING_CMS_POSTPAGE)
@@ -43,6 +45,13 @@ public class MQconfigger {
         Queue queue = new Queue(queue_cms_postpage_name);
 
         return queue;
+    }
+
+
+    @Bean
+    public Binding bindone(@Qualifier(QUEUE_CMS_POSTPAGE) Queue queue, @Qualifier(EX_ROUTING_CMS_POSTPAGE) Exchange exchange){
+
+        return BindingBuilder.bind(queue).to(exchange).with(routingKey).noargs();
     }
 
 }

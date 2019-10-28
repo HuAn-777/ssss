@@ -175,7 +175,7 @@ public class CmsServiceImpl implements CmsService {
 
         String dataUrl = cmsPage.getDataUrl();
 
-        ResponseEntity<Map> forEntity = restTemplate.getForEntity("http://localhost:31001/cms/getmodel?id=5a791725dd573c3574ee333f", Map.class);
+        ResponseEntity<Map> forEntity = restTemplate.getForEntity(dataUrl, Map.class);
 
         Map body = forEntity.getBody();
 
@@ -187,7 +187,7 @@ public class CmsServiceImpl implements CmsService {
 
         String templateFileId = cmsTemplate.getTemplateFileId();
 
-        GridFSFile id = gridFsTemplate.findOne(Query.query(Criteria.where("_id").is("5db1698599484265ba9dbf51")));
+        GridFSFile id = gridFsTemplate.findOne(Query.query(Criteria.where("_id").is(templateFileId)));
 
         GridFSDownloadStream gridFSDownloadStream = gridFSBucket.openDownloadStream(id.getObjectId());
 

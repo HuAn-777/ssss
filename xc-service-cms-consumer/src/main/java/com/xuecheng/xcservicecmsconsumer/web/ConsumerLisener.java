@@ -32,6 +32,8 @@ public class ConsumerLisener {
 
         String pageId = (String) map.get("pageId");
 
+        System.out.println(pageId);
+
         Optional<CmsPage> byId = cmspageRestore.findById(pageId);
 
         if(!byId.isPresent()){

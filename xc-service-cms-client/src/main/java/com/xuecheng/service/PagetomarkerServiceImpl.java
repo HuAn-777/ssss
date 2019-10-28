@@ -88,7 +88,7 @@ public class PagetomarkerServiceImpl implements PagetomarkerService {
 
             StringTemplateLoader stringTemplateLoader = new StringTemplateLoader();
 
-            stringTemplateLoader.putTemplate("template", inputStram.toString());
+            stringTemplateLoader.putTemplate("template", IOUtils.toString(inputStram));
 
             configuration.setTemplateLoader(stringTemplateLoader);
 
