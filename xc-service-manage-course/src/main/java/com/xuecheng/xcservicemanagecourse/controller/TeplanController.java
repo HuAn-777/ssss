@@ -12,6 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 /**
@@ -103,9 +106,23 @@ public class TeplanController implements ManageCourseApi {
 
     @GetMapping("/updateCourseMarket")
     @ResponseBody
-    public ResponseResult updateCourseMarket(CourseMarket courseMarket) {
+    public ResponseResult updateCourseMarket(String id,String startTime,String endTime,String qq,String price) throws ParseException {
 
-        ResponseResult result=teplanService.updateCourseMarket(courseMarket);
+        CourseMarket courseMarket = new CourseMarket();
+
+        courseMarket.setId(id);
+
+        courseMarket.setPrice(Float.parseFloat(price));
+
+        courseMarket.setQq(qq);
+
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+        courseMarket.setEndTime(simpleDateFormat.parse(endTime.replace("T"," ")));
+
+        courseMarket.setStartTime(simpleDateFormat.parse(startTime.replace("T"," ")));
+
+        ResponseResult result = teplanService.updateCourseMarket(courseMarket);
 
         return result;
     }
