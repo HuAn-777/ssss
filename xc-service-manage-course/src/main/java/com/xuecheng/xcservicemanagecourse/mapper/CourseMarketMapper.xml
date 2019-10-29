@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xuecheng.xcservicemanagecourse.mapper.CourseMarketMapper" >
+  <resultMap id="BaseResultMap" type="com.xuecheng.xcservicemanagecourse.pojo.CourseMarket" >
+    <constructor >
+      <idArg column="id" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="charge" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="valid" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="expires" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="qq" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="price" jdbcType="REAL" javaType="java.lang.Float" />
+      <arg column="price_old" jdbcType="REAL" javaType="java.lang.Float" />
+      <arg column="start_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="end_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+    </constructor>
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, charge, valid, expires, qq, price, price_old, start_time, end_time
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.xuecheng.xcservicemanagecourse.pojo.CourseMarketExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from course_market
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from course_market
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from course_market
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.xuecheng.xcservicemanagecourse.pojo.CourseMarketExample" >
+    delete from course_market
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.xuecheng.xcservicemanagecourse.pojo.CourseMarket" >
+    insert into course_market (id, charge, valid, 
+      expires, qq, price, 
+      price_old, start_time, end_time
+      )
+    values (#{id,jdbcType=VARCHAR}, #{charge,jdbcType=VARCHAR}, #{valid,jdbcType=VARCHAR}, 
+      #{expires,jdbcType=TIMESTAMP}, #{qq,jdbcType=VARCHAR}, #{price,jdbcType=REAL}, 
+      #{priceOld,jdbcType=REAL}, #{startTime,jdbcType=TIMESTAMP}, #{endTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.xuecheng.xcservicemanagecourse.pojo.CourseMarket" >
+    insert into course_market
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="charge != null" >
+        charge,
+      </if>
+      <if test="valid != null" >
+        valid,
+      </if>
+      <if test="expires != null" >
+        expires,
+      </if>
+      <if test="qq != null" >
+        qq,
+      </if>
+      <if test="price != null" >
+        price,
+      </if>
+      <if test="priceOld != null" >
+        price_old,
+      </if>
+      <if test="startTime != null" >
+        start_time,
+      </if>
+      <if test="endTime != null" >
+        end_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="charge != null" >
+        #{charge,jdbcType=VARCHAR},
+      </if>
+      <if test="valid != null" >
+        #{valid,jdbcType=VARCHAR},
+      </if>
+      <if test="expires != null" >
+        #{expires,jdbcType=TIMESTAMP},
+      </if>
+      <if test="qq != null" >
+        #{qq,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null" >
+        #{price,jdbcType=REAL},
+      </if>
+      <if test="priceOld != null" >
+        #{priceOld,jdbcType=REAL},
+      </if>
+      <if test="startTime != null" >
+        #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null" >
+        #{endTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.xuecheng.xcservicemanagecourse.pojo.CourseMarketExample" resultType="java.lang.Integer" >
+    select count(*) from course_market
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update course_market
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.charge != null" >
+        charge = #{record.charge,jdbcType=VARCHAR},
+      </if>
+      <if test="record.valid != null" >
+        valid = #{record.valid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.expires != null" >
+        expires = #{record.expires,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.qq != null" >
+        qq = #{record.qq,jdbcType=VARCHAR},
+      </if>
+      <if test="record.price != null" >
+        price = #{record.price,jdbcType=REAL},
+      </if>
+      <if test="record.priceOld != null" >
+        price_old = #{record.priceOld,jdbcType=REAL},
+      </if>
+      <if test="record.startTime != null" >
+        start_time = #{record.startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.endTime != null" >
+        end_time = #{record.endTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update course_market
+    set id = #{record.id,jdbcType=VARCHAR},
+      charge = #{record.charge,jdbcType=VARCHAR},
+      valid = #{record.valid,jdbcType=VARCHAR},
+      expires = #{record.expires,jdbcType=TIMESTAMP},
+      qq = #{record.qq,jdbcType=VARCHAR},
+      price = #{record.price,jdbcType=REAL},
+      price_old = #{record.priceOld,jdbcType=REAL},
+      start_time = #{record.startTime,jdbcType=TIMESTAMP},
+      end_time = #{record.endTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xuecheng.xcservicemanagecourse.pojo.CourseMarket" >
+    update course_market
+    <set >
+      <if test="charge != null" >
+        charge = #{charge,jdbcType=VARCHAR},
+      </if>
+      <if test="valid != null" >
+        valid = #{valid,jdbcType=VARCHAR},
+      </if>
+      <if test="expires != null" >
+        expires = #{expires,jdbcType=TIMESTAMP},
+      </if>
+      <if test="qq != null" >
+        qq = #{qq,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null" >
+        price = #{price,jdbcType=REAL},
+      </if>
+      <if test="priceOld != null" >
+        price_old = #{priceOld,jdbcType=REAL},
+      </if>
+      <if test="startTime != null" >
+        start_time = #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null" >
+        end_time = #{endTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.xuecheng.xcservicemanagecourse.pojo.CourseMarket" >
+    update course_market
+    set charge = #{charge,jdbcType=VARCHAR},
+      valid = #{valid,jdbcType=VARCHAR},
+      expires = #{expires,jdbcType=TIMESTAMP},
+      qq = #{qq,jdbcType=VARCHAR},
+      price = #{price,jdbcType=REAL},
+      price_old = #{priceOld,jdbcType=REAL},
+      start_time = #{startTime,jdbcType=TIMESTAMP},
+      end_time = #{endTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>
