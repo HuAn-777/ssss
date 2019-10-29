@@ -9,4 +9,6 @@ import org.springframework.data.mongodb.repository.MongoRepository;
  * @date 2019/10/23
  */
 public interface CmsConfigReportry extends MongoRepository<CmsConfig,String> {
+
+    public CmsConfig findByName(String name);
 }

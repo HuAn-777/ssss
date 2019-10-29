@@ -16,4 +16,7 @@ public interface CmsConfigControllerApi {
     @ApiOperation("根据id查询CMS配置信息")
     public CmsConfig getmodel(String id);
 
+    @ApiOperation("查询课程分类信息")
+    public CmsConfig getfenleilist();
+
 }

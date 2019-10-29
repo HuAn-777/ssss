@@ -2,7 +2,9 @@ package com.xuecheng.api.api;
 
 
 
+
 import com.xuecheng.framework.domain.course.ext.TeachplanNode;
+import com.xuecheng.framework.model.response.QueryResponseResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
@@ -19,6 +21,14 @@ public interface ManageCourseApi {
 
     @ApiOperation("获取所有课程计划的方法")
     public List<TeachplanNode> selectList();
+
+    @ApiOperation("获取已有课程的方法")
+    public QueryResponseResult selectBypageid(String page,String size);
+
+    @ApiOperation("获取课程总数的方法")
+    public int selectAllpagesize();
+
+
 
 
 }

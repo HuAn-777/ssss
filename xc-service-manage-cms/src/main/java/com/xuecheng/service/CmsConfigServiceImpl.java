@@ -30,4 +30,12 @@ public class CmsConfigServiceImpl implements CmsConfigService {
 
         return null;
     }
+
+    @Override
+    public CmsConfig getfenleilist() {
+
+        CmsConfig cmsCon = cmsConfigReportry.findByName("分类信息");
+
+        return cmsCon;
+    }
 }

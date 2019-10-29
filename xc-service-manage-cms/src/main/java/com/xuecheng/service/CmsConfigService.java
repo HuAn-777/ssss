@@ -10,4 +10,6 @@ import com.xuecheng.framework.domain.cms.CmsConfig;
 public interface CmsConfigService {
 
     public CmsConfig getmodel(String id);
+
+    public CmsConfig getfenleilist();
 }

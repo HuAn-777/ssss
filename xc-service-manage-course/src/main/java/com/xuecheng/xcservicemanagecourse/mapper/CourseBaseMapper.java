@@ -1,5 +1,8 @@
 package com.xuecheng.xcservicemanagecourse.mapper;
 
+import com.github.pagehelper.Page;
+import com.xuecheng.framework.domain.course.ext.CourseInfo;
+import com.xuecheng.framework.domain.course.request.CourseListRequest;
 import com.xuecheng.xcservicemanagecourse.pojo.CourseBase;
 import com.xuecheng.xcservicemanagecourse.pojo.CourseBaseExample;
 import org.apache.ibatis.annotations.Param;
@@ -34,4 +37,6 @@ public interface CourseBaseMapper {
     int updateByPrimaryKeyWithBLOBs(CourseBase record);
 
     int updateByPrimaryKey(CourseBase record);
+
+    Page<CourseInfo> findCourseListPage(CourseListRequest courseListRequest);
 }

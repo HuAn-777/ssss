@@ -1,5 +1,8 @@
 package com.xuecheng.xcservicemanagecourse.pojo;
 
+
+
+
 public class Category {
     private String id;
 

@@ -29,5 +29,15 @@ public class CmsConfigControler implements CmsConfigControllerApi {
         return cmsConfigService.getmodel(id);
     }
 
+    @Override
+    @GetMapping("/list")
+    @ResponseBody
+    public CmsConfig getfenleilist() {
+
+        CmsConfig getfenleilist = cmsConfigService.getfenleilist();
+
+        return getfenleilist;
+    }
+
 
 }

@@ -2,6 +2,7 @@ package com.xuecheng.xcservicemanagecourse.mapper;
 
 import com.xuecheng.xcservicemanagecourse.pojo.Category;
 import com.xuecheng.xcservicemanagecourse.pojo.CategoryExample;
+import com.xuecheng.xcservicemanagecourse.pojo.CourseBase;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -13,7 +14,7 @@ public interface CategoryMapper {
 
     int deleteByPrimaryKey(String id);
 
-    int insert(Category record);
+    int insert(CourseBase record);
 
     int insertSelective(Category record);
 
