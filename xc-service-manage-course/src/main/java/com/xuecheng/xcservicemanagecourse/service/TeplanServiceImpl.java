@@ -1,6 +1,8 @@
 package com.xuecheng.xcservicemanagecourse.service;
 
+import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.xuecheng.framework.domain.course.ext.CourseInfo;
 import com.xuecheng.framework.domain.course.ext.TeachplanNode;
 import com.xuecheng.framework.model.response.CommonCode;
 import com.xuecheng.framework.model.response.QueryResponseResult;
@@ -54,13 +56,17 @@ public class TeplanServiceImpl implements TeplanService {
 
         PageHelper.startPage(Integer.parseInt(page),Integer.parseInt(size));
 
-        List<CourseBase> courseBases = courseBaseMapper.selectByExampleWithBLOBs(null);
+        //List<CourseBase> courseBases = courseBaseMapper.selectByExampleWithBLOBs(null);
 
-        QueryResult<CourseBase> categoryQueryResult = new QueryResult<>();
+        Page<CourseInfo> courseListPage = courseBaseMapper.findCourseListPage(null);
 
-        categoryQueryResult.setList(courseBases);
+        List<CourseInfo> result = courseListPage.getResult();
 
-        categoryQueryResult.setTotal(courseBases.size());
+        QueryResult<CourseInfo> categoryQueryResult = new QueryResult<>();
+
+        categoryQueryResult.setList(result);
+
+        categoryQueryResult.setTotal(result.size());
 
         QueryResponseResult queryResponseResult = new QueryResponseResult(CommonCode.SUCCESS, categoryQueryResult);
 

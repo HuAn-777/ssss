@@ -5,6 +5,7 @@ package com.xuecheng.api.api;
 
 import com.xuecheng.framework.domain.course.ext.TeachplanNode;
 import com.xuecheng.framework.model.response.QueryResponseResult;
+import com.xuecheng.framework.model.response.ResponseResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
@@ -27,6 +28,9 @@ public interface ManageCourseApi {
 
     @ApiOperation("获取课程总数的方法")
     public int selectAllpagesize();
+
+    @ApiOperation("图片上传方法")
+    public ResponseResult addPic(String courseId, String pic);
 
 
 

@@ -7,7 +7,7 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
-@EntityScan("com.xuecheng.framework.domain.course")//扫描实体类
+@EntityScan("com.xuecheng.framework.domain")//扫描实体类
 @ComponentScan(basePackages={"com.xuecheng.api"})//扫描接口
 @ComponentScan(basePackages={"com.xuecheng.xcservicemanagecourse"})
 @ComponentScan(basePackages={"com.xuecheng.framework"})//扫描common下的所有类

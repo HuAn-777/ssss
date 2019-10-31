@@ -7,6 +7,8 @@ import com.xuecheng.framework.model.response.ResponseResult;
 import com.xuecheng.xcservicemanagecourse.pojo.Category;
 import com.xuecheng.xcservicemanagecourse.pojo.CourseBase;
 import com.xuecheng.xcservicemanagecourse.pojo.CourseMarket;
+import com.xuecheng.xcservicemanagecourse.pojo.CoursePic;
+import com.xuecheng.xcservicemanagecourse.service.CoursePicServiceImpl;
 import com.xuecheng.xcservicemanagecourse.service.TeplanService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,7 +16,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 /**
@@ -28,6 +29,9 @@ public class TeplanController implements ManageCourseApi {
 
     @Autowired
     private TeplanService teplanService;
+
+    @Autowired
+    private CoursePicServiceImpl coursePicService;
 
     @GetMapping("/teachplan/getList")
     @ResponseBody
@@ -57,6 +61,8 @@ public class TeplanController implements ManageCourseApi {
         int i = teplanService.selectAllpagesize();
         return i;
     }
+
+
 
 
     @GetMapping("/list")
@@ -123,6 +129,34 @@ public class TeplanController implements ManageCourseApi {
         courseMarket.setStartTime(simpleDateFormat.parse(startTime.replace("T"," ")));
 
         ResponseResult result = teplanService.updateCourseMarket(courseMarket);
+
+        return result;
+    }
+
+    @RequestMapping("/coursepic/add")
+    @Override
+    @ResponseBody
+    public ResponseResult addPic(String courseId, String pic) {
+
+        ResponseResult result = coursePicService.saveCoursePic(courseId, pic);
+
+        return result;
+    }
+
+    @RequestMapping("/coursepic/list")
+    @ResponseBody
+    public CoursePic getPic(String courseId) {
+
+        CoursePic result = coursePicService.getCoursePic(courseId);
+
+        return result;
+    }
+
+    @DeleteMapping("/coursepic/delete")
+    @ResponseBody
+    public ResponseResult deletePic(String courseId) {
+
+        ResponseResult result = coursePicService.deleteCoursePic(courseId);
 
         return result;
     }
