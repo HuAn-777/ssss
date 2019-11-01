@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <link rel="stylesheet" href="/plugins/normalize-css/normalize.css" />
-    <link rel="stylesheet" href="/plugins/bootstrap/dist/css/bootstrap.css" />
-    <link rel="stylesheet" href="/css/page-learing-index.css" />
-    <link rel="stylesheet" href="/css/page-header.css" />
+    <link rel="stylesheet" href="/plugins/normalize-css/normalize.css"/>
+    <link rel="stylesheet" href="/plugins/bootstrap/dist/css/bootstrap.css"/>
+    <link rel="stylesheet" href="/css/page-learing-index.css"/>
+    <link rel="stylesheet" href="/css/page-header.css"/>
 </head>
 <body>
 <div class="banner-roll">
@@ -44,15 +44,16 @@
             num++;
         }
     }
-    $('.indicators').find('span').click(function() {
+
+    $('.indicators').find('span').click(function () {
         num = $(this).index();
         roll();
     });
     var timer = setInterval(roll, 3000);
-    $('.banner-item').mouseover(function() {
+    $('.banner-item').mouseover(function () {
         clearInterval(timer)
     });
-    $('.banner-item').mouseout(function() {
+    $('.banner-item').mouseout(function () {
         timer = setInterval(roll, 3000)
     });
 </script>

@@ -1,0 +1,501 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xuecheng.xcservicemanagecourse.mapper.CoursePreMapper" >
+  <resultMap id="BaseResultMap" type="com.xuecheng.xcservicemanagecourse.pojo.CoursePre" >
+    <constructor >
+      <idArg column="id" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="users" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="mt" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="st" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="grade" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="studymodel" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="status" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="timestamp" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="charge" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="valid" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="qq" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="price" jdbcType="REAL" javaType="java.lang.Float" />
+      <arg column="price_old" jdbcType="REAL" javaType="java.lang.Float" />
+      <arg column="expires" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="pic" jdbcType="VARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.xuecheng.xcservicemanagecourse.pojo.CoursePreWithBLOBs" >
+    <constructor >
+      <idArg column="id" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="users" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="mt" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="st" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="grade" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="studymodel" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="status" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="timestamp" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="charge" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="valid" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="qq" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="price" jdbcType="REAL" javaType="java.lang.Float" />
+      <arg column="price_old" jdbcType="REAL" javaType="java.lang.Float" />
+      <arg column="expires" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="pic" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="description" jdbcType="LONGVARCHAR" javaType="java.lang.String" />
+      <arg column="teachplan" jdbcType="LONGVARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, name, users, mt, st, grade, studymodel, status, timestamp, charge, valid, qq, 
+    price, price_old, expires, pic
+  </sql>
+  <sql id="Blob_Column_List" >
+    description, teachplan
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.xuecheng.xcservicemanagecourse.pojo.CoursePreExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from course_pre
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.xuecheng.xcservicemanagecourse.pojo.CoursePreExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from course_pre
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from course_pre
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from course_pre
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.xuecheng.xcservicemanagecourse.pojo.CoursePreExample" >
+    delete from course_pre
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.xuecheng.xcservicemanagecourse.pojo.CoursePreWithBLOBs" >
+    insert into course_pre (id, name, users, 
+      mt, st, grade, studymodel, 
+      status, timestamp, charge, 
+      valid, qq, price, price_old, 
+      expires, pic, description, 
+      teachplan)
+    values (#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{users,jdbcType=VARCHAR}, 
+      #{mt,jdbcType=VARCHAR}, #{st,jdbcType=VARCHAR}, #{grade,jdbcType=VARCHAR}, #{studymodel,jdbcType=VARCHAR}, 
+      #{status,jdbcType=VARCHAR}, #{timestamp,jdbcType=TIMESTAMP}, #{charge,jdbcType=VARCHAR}, 
+      #{valid,jdbcType=VARCHAR}, #{qq,jdbcType=VARCHAR}, #{price,jdbcType=REAL}, #{priceOld,jdbcType=REAL}, 
+      #{expires,jdbcType=TIMESTAMP}, #{pic,jdbcType=VARCHAR}, #{description,jdbcType=LONGVARCHAR}, 
+      #{teachplan,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.xuecheng.xcservicemanagecourse.pojo.CoursePreWithBLOBs" >
+    insert into course_pre
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="users != null" >
+        users,
+      </if>
+      <if test="mt != null" >
+        mt,
+      </if>
+      <if test="st != null" >
+        st,
+      </if>
+      <if test="grade != null" >
+        grade,
+      </if>
+      <if test="studymodel != null" >
+        studymodel,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="timestamp != null" >
+        timestamp,
+      </if>
+      <if test="charge != null" >
+        charge,
+      </if>
+      <if test="valid != null" >
+        valid,
+      </if>
+      <if test="qq != null" >
+        qq,
+      </if>
+      <if test="price != null" >
+        price,
+      </if>
+      <if test="priceOld != null" >
+        price_old,
+      </if>
+      <if test="expires != null" >
+        expires,
+      </if>
+      <if test="pic != null" >
+        pic,
+      </if>
+      <if test="description != null" >
+        description,
+      </if>
+      <if test="teachplan != null" >
+        teachplan,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="users != null" >
+        #{users,jdbcType=VARCHAR},
+      </if>
+      <if test="mt != null" >
+        #{mt,jdbcType=VARCHAR},
+      </if>
+      <if test="st != null" >
+        #{st,jdbcType=VARCHAR},
+      </if>
+      <if test="grade != null" >
+        #{grade,jdbcType=VARCHAR},
+      </if>
+      <if test="studymodel != null" >
+        #{studymodel,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="timestamp != null" >
+        #{timestamp,jdbcType=TIMESTAMP},
+      </if>
+      <if test="charge != null" >
+        #{charge,jdbcType=VARCHAR},
+      </if>
+      <if test="valid != null" >
+        #{valid,jdbcType=VARCHAR},
+      </if>
+      <if test="qq != null" >
+        #{qq,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null" >
+        #{price,jdbcType=REAL},
+      </if>
+      <if test="priceOld != null" >
+        #{priceOld,jdbcType=REAL},
+      </if>
+      <if test="expires != null" >
+        #{expires,jdbcType=TIMESTAMP},
+      </if>
+      <if test="pic != null" >
+        #{pic,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="teachplan != null" >
+        #{teachplan,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.xuecheng.xcservicemanagecourse.pojo.CoursePreExample" resultType="java.lang.Integer" >
+    select count(*) from course_pre
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update course_pre
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.name != null" >
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.users != null" >
+        users = #{record.users,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mt != null" >
+        mt = #{record.mt,jdbcType=VARCHAR},
+      </if>
+      <if test="record.st != null" >
+        st = #{record.st,jdbcType=VARCHAR},
+      </if>
+      <if test="record.grade != null" >
+        grade = #{record.grade,jdbcType=VARCHAR},
+      </if>
+      <if test="record.studymodel != null" >
+        studymodel = #{record.studymodel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=VARCHAR},
+      </if>
+      <if test="record.timestamp != null" >
+        timestamp = #{record.timestamp,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.charge != null" >
+        charge = #{record.charge,jdbcType=VARCHAR},
+      </if>
+      <if test="record.valid != null" >
+        valid = #{record.valid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.qq != null" >
+        qq = #{record.qq,jdbcType=VARCHAR},
+      </if>
+      <if test="record.price != null" >
+        price = #{record.price,jdbcType=REAL},
+      </if>
+      <if test="record.priceOld != null" >
+        price_old = #{record.priceOld,jdbcType=REAL},
+      </if>
+      <if test="record.expires != null" >
+        expires = #{record.expires,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.pic != null" >
+        pic = #{record.pic,jdbcType=VARCHAR},
+      </if>
+      <if test="record.description != null" >
+        description = #{record.description,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.teachplan != null" >
+        teachplan = #{record.teachplan,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update course_pre
+    set id = #{record.id,jdbcType=VARCHAR},
+      name = #{record.name,jdbcType=VARCHAR},
+      users = #{record.users,jdbcType=VARCHAR},
+      mt = #{record.mt,jdbcType=VARCHAR},
+      st = #{record.st,jdbcType=VARCHAR},
+      grade = #{record.grade,jdbcType=VARCHAR},
+      studymodel = #{record.studymodel,jdbcType=VARCHAR},
+      status = #{record.status,jdbcType=VARCHAR},
+      timestamp = #{record.timestamp,jdbcType=TIMESTAMP},
+      charge = #{record.charge,jdbcType=VARCHAR},
+      valid = #{record.valid,jdbcType=VARCHAR},
+      qq = #{record.qq,jdbcType=VARCHAR},
+      price = #{record.price,jdbcType=REAL},
+      price_old = #{record.priceOld,jdbcType=REAL},
+      expires = #{record.expires,jdbcType=TIMESTAMP},
+      pic = #{record.pic,jdbcType=VARCHAR},
+      description = #{record.description,jdbcType=LONGVARCHAR},
+      teachplan = #{record.teachplan,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update course_pre
+    set id = #{record.id,jdbcType=VARCHAR},
+      name = #{record.name,jdbcType=VARCHAR},
+      users = #{record.users,jdbcType=VARCHAR},
+      mt = #{record.mt,jdbcType=VARCHAR},
+      st = #{record.st,jdbcType=VARCHAR},
+      grade = #{record.grade,jdbcType=VARCHAR},
+      studymodel = #{record.studymodel,jdbcType=VARCHAR},
+      status = #{record.status,jdbcType=VARCHAR},
+      timestamp = #{record.timestamp,jdbcType=TIMESTAMP},
+      charge = #{record.charge,jdbcType=VARCHAR},
+      valid = #{record.valid,jdbcType=VARCHAR},
+      qq = #{record.qq,jdbcType=VARCHAR},
+      price = #{record.price,jdbcType=REAL},
+      price_old = #{record.priceOld,jdbcType=REAL},
+      expires = #{record.expires,jdbcType=TIMESTAMP},
+      pic = #{record.pic,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xuecheng.xcservicemanagecourse.pojo.CoursePreWithBLOBs" >
+    update course_pre
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="users != null" >
+        users = #{users,jdbcType=VARCHAR},
+      </if>
+      <if test="mt != null" >
+        mt = #{mt,jdbcType=VARCHAR},
+      </if>
+      <if test="st != null" >
+        st = #{st,jdbcType=VARCHAR},
+      </if>
+      <if test="grade != null" >
+        grade = #{grade,jdbcType=VARCHAR},
+      </if>
+      <if test="studymodel != null" >
+        studymodel = #{studymodel,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="timestamp != null" >
+        timestamp = #{timestamp,jdbcType=TIMESTAMP},
+      </if>
+      <if test="charge != null" >
+        charge = #{charge,jdbcType=VARCHAR},
+      </if>
+      <if test="valid != null" >
+        valid = #{valid,jdbcType=VARCHAR},
+      </if>
+      <if test="qq != null" >
+        qq = #{qq,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null" >
+        price = #{price,jdbcType=REAL},
+      </if>
+      <if test="priceOld != null" >
+        price_old = #{priceOld,jdbcType=REAL},
+      </if>
+      <if test="expires != null" >
+        expires = #{expires,jdbcType=TIMESTAMP},
+      </if>
+      <if test="pic != null" >
+        pic = #{pic,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        description = #{description,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="teachplan != null" >
+        teachplan = #{teachplan,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.xuecheng.xcservicemanagecourse.pojo.CoursePreWithBLOBs" >
+    update course_pre
+    set name = #{name,jdbcType=VARCHAR},
+      users = #{users,jdbcType=VARCHAR},
+      mt = #{mt,jdbcType=VARCHAR},
+      st = #{st,jdbcType=VARCHAR},
+      grade = #{grade,jdbcType=VARCHAR},
+      studymodel = #{studymodel,jdbcType=VARCHAR},
+      status = #{status,jdbcType=VARCHAR},
+      timestamp = #{timestamp,jdbcType=TIMESTAMP},
+      charge = #{charge,jdbcType=VARCHAR},
+      valid = #{valid,jdbcType=VARCHAR},
+      qq = #{qq,jdbcType=VARCHAR},
+      price = #{price,jdbcType=REAL},
+      price_old = #{priceOld,jdbcType=REAL},
+      expires = #{expires,jdbcType=TIMESTAMP},
+      pic = #{pic,jdbcType=VARCHAR},
+      description = #{description,jdbcType=LONGVARCHAR},
+      teachplan = #{teachplan,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.xuecheng.xcservicemanagecourse.pojo.CoursePre" >
+    update course_pre
+    set name = #{name,jdbcType=VARCHAR},
+      users = #{users,jdbcType=VARCHAR},
+      mt = #{mt,jdbcType=VARCHAR},
+      st = #{st,jdbcType=VARCHAR},
+      grade = #{grade,jdbcType=VARCHAR},
+      studymodel = #{studymodel,jdbcType=VARCHAR},
+      status = #{status,jdbcType=VARCHAR},
+      timestamp = #{timestamp,jdbcType=TIMESTAMP},
+      charge = #{charge,jdbcType=VARCHAR},
+      valid = #{valid,jdbcType=VARCHAR},
+      qq = #{qq,jdbcType=VARCHAR},
+      price = #{price,jdbcType=REAL},
+      price_old = #{priceOld,jdbcType=REAL},
+      expires = #{expires,jdbcType=TIMESTAMP},
+      pic = #{pic,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

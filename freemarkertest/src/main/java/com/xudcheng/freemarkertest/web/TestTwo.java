@@ -17,8 +17,9 @@ import java.util.Map;
 public class TestTwo {
     @Autowired
     private RestTemplate template;
+
     @RequestMapping("/getone")
-    public String getModel(Map<String,Object> map){
+    public String getModel(Map<String, Object> map) {
 
         String dataUrl = "http://localhost:31001/cms/getmodel?id=5a791725dd573c3574ee333f";
 

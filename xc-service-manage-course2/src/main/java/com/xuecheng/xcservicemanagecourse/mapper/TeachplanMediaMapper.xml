@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xuecheng.xcservicemanagecourse.mapper.TeachplanMediaMapper" >
+  <resultMap id="BaseResultMap" type="com.xuecheng.xcservicemanagecourse.pojo.TeachplanMedia" >
+    <constructor >
+      <idArg column="teachplan_id" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="media_id" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="media_fileoriginalname" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="media_url" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="courseid" jdbcType="VARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    teachplan_id, media_id, media_fileoriginalname, media_url, courseid
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.xuecheng.xcservicemanagecourse.pojo.TeachplanMediaExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from teachplan_media
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from teachplan_media
+    where teachplan_id = #{teachplanId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from teachplan_media
+    where teachplan_id = #{teachplanId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.xuecheng.xcservicemanagecourse.pojo.TeachplanMediaExample" >
+    delete from teachplan_media
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.xuecheng.xcservicemanagecourse.pojo.TeachplanMedia" >
+    insert into teachplan_media (teachplan_id, media_id, media_fileoriginalname, 
+      media_url, courseid)
+    values (#{teachplanId,jdbcType=VARCHAR}, #{mediaId,jdbcType=VARCHAR}, #{mediaFileoriginalname,jdbcType=VARCHAR}, 
+      #{mediaUrl,jdbcType=VARCHAR}, #{courseid,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.xuecheng.xcservicemanagecourse.pojo.TeachplanMedia" >
+    insert into teachplan_media
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="teachplanId != null" >
+        teachplan_id,
+      </if>
+      <if test="mediaId != null" >
+        media_id,
+      </if>
+      <if test="mediaFileoriginalname != null" >
+        media_fileoriginalname,
+      </if>
+      <if test="mediaUrl != null" >
+        media_url,
+      </if>
+      <if test="courseid != null" >
+        courseid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="teachplanId != null" >
+        #{teachplanId,jdbcType=VARCHAR},
+      </if>
+      <if test="mediaId != null" >
+        #{mediaId,jdbcType=VARCHAR},
+      </if>
+      <if test="mediaFileoriginalname != null" >
+        #{mediaFileoriginalname,jdbcType=VARCHAR},
+      </if>
+      <if test="mediaUrl != null" >
+        #{mediaUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="courseid != null" >
+        #{courseid,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.xuecheng.xcservicemanagecourse.pojo.TeachplanMediaExample" resultType="java.lang.Integer" >
+    select count(*) from teachplan_media
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update teachplan_media
+    <set >
+      <if test="record.teachplanId != null" >
+        teachplan_id = #{record.teachplanId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mediaId != null" >
+        media_id = #{record.mediaId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mediaFileoriginalname != null" >
+        media_fileoriginalname = #{record.mediaFileoriginalname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mediaUrl != null" >
+        media_url = #{record.mediaUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.courseid != null" >
+        courseid = #{record.courseid,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update teachplan_media
+    set teachplan_id = #{record.teachplanId,jdbcType=VARCHAR},
+      media_id = #{record.mediaId,jdbcType=VARCHAR},
+      media_fileoriginalname = #{record.mediaFileoriginalname,jdbcType=VARCHAR},
+      media_url = #{record.mediaUrl,jdbcType=VARCHAR},
+      courseid = #{record.courseid,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xuecheng.xcservicemanagecourse.pojo.TeachplanMedia" >
+    update teachplan_media
+    <set >
+      <if test="mediaId != null" >
+        media_id = #{mediaId,jdbcType=VARCHAR},
+      </if>
+      <if test="mediaFileoriginalname != null" >
+        media_fileoriginalname = #{mediaFileoriginalname,jdbcType=VARCHAR},
+      </if>
+      <if test="mediaUrl != null" >
+        media_url = #{mediaUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="courseid != null" >
+        courseid = #{courseid,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where teachplan_id = #{teachplanId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.xuecheng.xcservicemanagecourse.pojo.TeachplanMedia" >
+    update teachplan_media
+    set media_id = #{mediaId,jdbcType=VARCHAR},
+      media_fileoriginalname = #{mediaFileoriginalname,jdbcType=VARCHAR},
+      media_url = #{mediaUrl,jdbcType=VARCHAR},
+      courseid = #{courseid,jdbcType=VARCHAR}
+    where teachplan_id = #{teachplanId,jdbcType=VARCHAR}
+  </update>
+</mapper>

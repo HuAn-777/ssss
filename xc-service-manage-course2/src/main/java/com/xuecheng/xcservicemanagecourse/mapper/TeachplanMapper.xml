@@ -1,0 +1,343 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xuecheng.xcservicemanagecourse.mapper.TeachplanMapper" >
+  <resultMap id="BaseResultMap" type="com.xuecheng.xcservicemanagecourse.pojo.Teachplan" >
+    <constructor >
+      <idArg column="id" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="pname" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="parentid" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="grade" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="ptype" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="description" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="timelength" jdbcType="DOUBLE" javaType="java.lang.Double" />
+      <arg column="courseid" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="orderby" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="status" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="trylearn" jdbcType="CHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+  <resultMap id="teachplanMap" type="com.xuecheng.framework.domain.course.ext.TeachplanNode">
+    <id column="one_id" property="id"></id>
+    <result column="one_pname" property="pname"></result>
+    <collection property="children" ofType="com.xuecheng.framework.domain.course.ext.TeachplanNode">
+      <id column="two_id" property="id"></id>
+      <result column="two_pname" property="pname"></result>
+      <collection property="children" ofType="com.xuecheng.framework.domain.course.ext.TeachplanNode">
+        <id column="three_id" property="id"></id>
+        <result column="three_pname" property="pname"></result>
+      </collection>
+    </collection>
+
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, pname, parentid, grade, ptype, description, timelength, courseid, orderby, status, 
+    trylearn
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.xuecheng.xcservicemanagecourse.pojo.TeachplanExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from teachplan
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from teachplan
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from teachplan
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.xuecheng.xcservicemanagecourse.pojo.TeachplanExample" >
+    delete from teachplan
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.xuecheng.xcservicemanagecourse.pojo.Teachplan" >
+    insert into teachplan (id, pname, parentid, 
+      grade, ptype, description, 
+      timelength, courseid, orderby, 
+      status, trylearn)
+    values (#{id,jdbcType=VARCHAR}, #{pname,jdbcType=VARCHAR}, #{parentid,jdbcType=VARCHAR}, 
+      #{grade,jdbcType=CHAR}, #{ptype,jdbcType=CHAR}, #{description,jdbcType=VARCHAR}, 
+      #{timelength,jdbcType=DOUBLE}, #{courseid,jdbcType=VARCHAR}, #{orderby,jdbcType=VARCHAR}, 
+      #{status,jdbcType=CHAR}, #{trylearn,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.xuecheng.xcservicemanagecourse.pojo.Teachplan" >
+    insert into teachplan
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="pname != null" >
+        pname,
+      </if>
+      <if test="parentid != null" >
+        parentid,
+      </if>
+      <if test="grade != null" >
+        grade,
+      </if>
+      <if test="ptype != null" >
+        ptype,
+      </if>
+      <if test="description != null" >
+        description,
+      </if>
+      <if test="timelength != null" >
+        timelength,
+      </if>
+      <if test="courseid != null" >
+        courseid,
+      </if>
+      <if test="orderby != null" >
+        orderby,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="trylearn != null" >
+        trylearn,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="pname != null" >
+        #{pname,jdbcType=VARCHAR},
+      </if>
+      <if test="parentid != null" >
+        #{parentid,jdbcType=VARCHAR},
+      </if>
+      <if test="grade != null" >
+        #{grade,jdbcType=CHAR},
+      </if>
+      <if test="ptype != null" >
+        #{ptype,jdbcType=CHAR},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="timelength != null" >
+        #{timelength,jdbcType=DOUBLE},
+      </if>
+      <if test="courseid != null" >
+        #{courseid,jdbcType=VARCHAR},
+      </if>
+      <if test="orderby != null" >
+        #{orderby,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=CHAR},
+      </if>
+      <if test="trylearn != null" >
+        #{trylearn,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.xuecheng.xcservicemanagecourse.pojo.TeachplanExample" resultType="java.lang.Integer" >
+    select count(*) from teachplan
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update teachplan
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pname != null" >
+        pname = #{record.pname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.parentid != null" >
+        parentid = #{record.parentid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.grade != null" >
+        grade = #{record.grade,jdbcType=CHAR},
+      </if>
+      <if test="record.ptype != null" >
+        ptype = #{record.ptype,jdbcType=CHAR},
+      </if>
+      <if test="record.description != null" >
+        description = #{record.description,jdbcType=VARCHAR},
+      </if>
+      <if test="record.timelength != null" >
+        timelength = #{record.timelength,jdbcType=DOUBLE},
+      </if>
+      <if test="record.courseid != null" >
+        courseid = #{record.courseid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orderby != null" >
+        orderby = #{record.orderby,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=CHAR},
+      </if>
+      <if test="record.trylearn != null" >
+        trylearn = #{record.trylearn,jdbcType=CHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update teachplan
+    set id = #{record.id,jdbcType=VARCHAR},
+      pname = #{record.pname,jdbcType=VARCHAR},
+      parentid = #{record.parentid,jdbcType=VARCHAR},
+      grade = #{record.grade,jdbcType=CHAR},
+      ptype = #{record.ptype,jdbcType=CHAR},
+      description = #{record.description,jdbcType=VARCHAR},
+      timelength = #{record.timelength,jdbcType=DOUBLE},
+      courseid = #{record.courseid,jdbcType=VARCHAR},
+      orderby = #{record.orderby,jdbcType=VARCHAR},
+      status = #{record.status,jdbcType=CHAR},
+      trylearn = #{record.trylearn,jdbcType=CHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xuecheng.xcservicemanagecourse.pojo.Teachplan" >
+    update teachplan
+    <set >
+      <if test="pname != null" >
+        pname = #{pname,jdbcType=VARCHAR},
+      </if>
+      <if test="parentid != null" >
+        parentid = #{parentid,jdbcType=VARCHAR},
+      </if>
+      <if test="grade != null" >
+        grade = #{grade,jdbcType=CHAR},
+      </if>
+      <if test="ptype != null" >
+        ptype = #{ptype,jdbcType=CHAR},
+      </if>
+      <if test="description != null" >
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="timelength != null" >
+        timelength = #{timelength,jdbcType=DOUBLE},
+      </if>
+      <if test="courseid != null" >
+        courseid = #{courseid,jdbcType=VARCHAR},
+      </if>
+      <if test="orderby != null" >
+        orderby = #{orderby,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=CHAR},
+      </if>
+      <if test="trylearn != null" >
+        trylearn = #{trylearn,jdbcType=CHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.xuecheng.xcservicemanagecourse.pojo.Teachplan" >
+    update teachplan
+    set pname = #{pname,jdbcType=VARCHAR},
+      parentid = #{parentid,jdbcType=VARCHAR},
+      grade = #{grade,jdbcType=CHAR},
+      ptype = #{ptype,jdbcType=CHAR},
+      description = #{description,jdbcType=VARCHAR},
+      timelength = #{timelength,jdbcType=DOUBLE},
+      courseid = #{courseid,jdbcType=VARCHAR},
+      orderby = #{orderby,jdbcType=VARCHAR},
+      status = #{status,jdbcType=CHAR},
+      trylearn = #{trylearn,jdbcType=CHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <select id="selectList" parameterType="java.lang.String"
+          resultMap="teachplanMap">
+    SELECT
+    a.id one_id,
+    a.pname one_pname,
+    b.id two_id,
+    b.pname two_pname,
+    c.id three_id,
+    c.pname three_pname
+    FROM
+    teachplan a
+    LEFT JOIN teachplan b
+    ON b.parentid = a.id
+    LEFT JOIN teachplan c
+    ON c.parentid = b.id
+    WHERE a.parentid = '0'
+
+    ORDER BY a.orderby,
+    b.orderby,
+    c.orderby
+  </select>
+</mapper>

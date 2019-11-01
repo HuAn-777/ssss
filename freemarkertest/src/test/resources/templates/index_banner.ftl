@@ -8,11 +8,11 @@
 <body>
 <div>
 
-        <#if model??>
+    <#if model??>
         <#list model as mm>
-            <div  style="background-image: url(${mm.value});"></div>
+            <div style="background-image: url(${mm.value});"></div>
         </#list>
-        </#if>
+    </#if>
 
 
 </div>

@@ -35,11 +35,11 @@ public class Testont {
 
         Map<String, Object> hashMap = new HashMap<>();
 
-        hashMap.put("stu",student);
-        hashMap.put("stuu",student1);
+        hashMap.put("stu", student);
+        hashMap.put("stuu", student1);
 
-        map.put("stumap",hashMap);
-        map.put("str",student);
+        map.put("stumap", hashMap);
+        map.put("str", student);
 
         return "one";
 

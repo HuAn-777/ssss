@@ -23,7 +23,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 @SpringBootTest
-
 class FreemarkertestApplicationTests {
     @Autowired
     GridFsTemplate gridFsTemplate;
@@ -41,14 +40,14 @@ class FreemarkertestApplicationTests {
 
         StringTemplateLoader stringTemplateLoader = new StringTemplateLoader();
 
-        stringTemplateLoader.putTemplate("template",templateString);
+        stringTemplateLoader.putTemplate("template", templateString);
 
         configuration.setTemplateLoader(stringTemplateLoader);
 
         Template template = configuration.getTemplate("template", "UTF-8");
 
-        Map<String,Object> map=new HashMap<>();
-        map.put("name","张三");
+        Map<String, Object> map = new HashMap<>();
+        map.put("name", "张三");
 
         String s = FreeMarkerTemplateUtils.processTemplateIntoString(template, map);
 
@@ -58,45 +57,45 @@ class FreemarkertestApplicationTests {
 
         OutputStream outputStream = new FileOutputStream(new File("d:/one.html"));
 
-        IOUtils.copy(inputStream,outputStream);
+        IOUtils.copy(inputStream, outputStream);
     }
 
     @Test
     void savedata() throws Exception {
 
-        File file=new File("d:/one.html");
+        File file = new File("d:/one.html");
         //定义输入流         
-        FileInputStream inputStram=new FileInputStream(file);
+        FileInputStream inputStram = new FileInputStream(file);
         //向GridFS存储文件
-        ObjectId objectId=gridFsTemplate.store(inputStram,"轮播图测试文件01","");
+        ObjectId objectId = gridFsTemplate.store(inputStram, "轮播图测试文件01", "");
         //得到文件ID
-        String fileId=objectId.toString();
+        String fileId = objectId.toString();
         System.out.println(fileId);
     }
 
     @Test
     void savedatasada() throws Exception {
 
-        File file=new File("d:/index_banner.html");
+        File file = new File("d:/index_banner.html");
         //定义输入流         
-        FileInputStream inputStram=new FileInputStream(file);
+        FileInputStream inputStram = new FileInputStream(file);
         //向GridFS存储文件
-        ObjectId objectId=gridFsTemplate.store(inputStram,"lunboceshisssssss","");
+        ObjectId objectId = gridFsTemplate.store(inputStram, "lunboceshisssssss", "");
         //得到文件ID
-        String fileId=objectId.toString();
+        String fileId = objectId.toString();
         System.out.println(fileId);
     }
 
     @Test
     void testget() throws Exception {
 
-        String fileId="5db005c28a4c7e5fc2ab7ffa";
+        String fileId = "5db005c28a4c7e5fc2ab7ffa";
         //根据id查询文
         GridFSFile id = gridFsTemplate.findOne(Query.query(Criteria.where("_id").is(fileId)));
         //打开下载流对
         GridFSDownloadStream gridFSDownloadStream = gridFSBucket.openDownloadStream(id.getObjectId());
         //创建gridFsResource，用于获取流对
-        GridFsResource gridFsResource = new GridFsResource(id,gridFSDownloadStream);
+        GridFsResource gridFsResource = new GridFsResource(id, gridFSDownloadStream);
 
         String s = IOUtils.toString(gridFsResource.getInputStream());
 

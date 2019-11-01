@@ -1,6 +1,9 @@
 package com.xuecheng;
 
+import com.netflix.discovery.converters.Auto;
+import com.xuecheng.client.CmsController;
 import com.xuecheng.dao.CmsPageReportry;
+import com.xuecheng.framework.domain.cms.CmsConfig;
 import com.xuecheng.framework.domain.cms.CmsPage;
 import com.xuecheng.service.CmsService;
 import freemarker.template.TemplateException;
@@ -27,6 +30,9 @@ public class XcServiceManageCmsApplicationTests {
 
     @Autowired
     private CmsService cmsService;
+
+    @Autowired
+    private CmsController cmsController;
 
 
     @Test
@@ -76,6 +82,15 @@ public class XcServiceManageCmsApplicationTests {
 
         System.out.println(all);
 
+
+    }
+
+    @Test
+    public void testrtt(){
+
+        CmsConfig getmodel = cmsController.getmodel("5a791725dd573c3574ee333f");
+
+        System.out.println(getmodel);
 
     }
 
